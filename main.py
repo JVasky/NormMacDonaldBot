@@ -45,20 +45,22 @@ async def on_ready():
 
 @client.event
 async def on_message(message):
+  msg = message.content
+
   if message.author == client.user:
     return
 
   for x in message.mentions:
     if(x==client.user):
-      if string_found('vid', message.content) or string_found('video', message.content) or string_found('videos', message.content):
+      if string_found('help', msg):
+        await message.channel.send("$joke or $jokes will get you a random joke. If you mention me and ask for a video, you'll get a video.")
+      elif string_found('vid', msg) or string_found('vids',msg) or string_found('video', msg) or string_found('videos', msg):
         if len(vid_list) > 0:
           await message.channel.send(yt_vid_url + random.choice(vid_list)) 
         else:
           await message.channel.send('I got nothin.')
       else:
-        await message.channel.send("You got two commands to pick from: $joke, $jokes, and that's it.")      
-
-  msg = message.content
+        await message.channel.send("Haha well that's nice.")      
 
   if '$joke' in msg or '$jokes' in msg:
     await message.channel.send(random.choice(db['jokes']))
@@ -71,4 +73,3 @@ async def on_message(message):
 
 keep_alive()
 client.run(os.getenv('TOKEN'))
-
