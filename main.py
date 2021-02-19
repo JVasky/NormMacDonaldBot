@@ -56,7 +56,9 @@ async def on_message(message):
         await message.channel.send("$joke or $jokes will get you a random joke. If you mention me and ask for a video, you'll get a video.")
       elif string_found('vid', msg) or string_found('vids',msg) or string_found('video', msg) or string_found('videos', msg):
         if len(vid_list) > 0:
-          await message.channel.send(yt_vid_url + random.choice(vid_list)) 
+          await message.channel.send(yt_vid_url + random.choice(vid_list))
+        elif len(db['videos']) > 0:
+          await message.channel.send(yt_vid_url + random.choice(db['videos']))
         else:
           await message.channel.send('I got nothin.')
       else:
